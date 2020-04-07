@@ -1,0 +1,76 @@
+// The Extended Euclid's Method.cpp
+
+#include<iostream>
+#include<cstdio>
+#include<cstring>
+#include<cmath>
+#include<stack>
+using namespace std;
+
+int Extended_Euclid(int A, int B, int *X, int *Y)
+{
+	int x, y, u, v, m, n, divisor, divident, quotient, remainder;
+	// B = A(0) + B(1)
+	x = 0;  // x [i-2]
+	y = 1;  // y [i-2]
+
+			// A = A(1) + B(0)
+	u = 1;  /// x[i-1]
+	v = 0;  /// y[i-1]
+
+	divisor = A;
+	divident = B;
+
+	while (divisor != 0)
+	{
+		// b = aq + r and 0 <= r < a 
+		quotient = divident / divisor;
+
+		/// GCD function
+		remainder = divident % divisor;
+		divident = divisor;
+		divisor = remainder;
+
+		// r = A(x - uq) + B(y - vq) 
+		m = x - (u * quotient);      // m = x[i] = (x - uq)
+		n = y - (v * quotient);      //  n = y[i] = (y - vq)
+		x = u;            // updating x[i-1] = x[i-2]
+		y = v;            // updating y[i-1] = y[i-2]
+		u = m;          // updating x[i] = x[i-1]
+		v = n;           // updating y[i] = y[i-1]
+	}
+
+	// Ax + By = gcd(A, B)
+	*X = x;
+	*Y = y;
+	
+	return divident;
+}
+
+int main()
+{
+	int A, B, X, Y;
+	
+	while (scanf("%d%d", &A, &B) != EOF) {
+		printf("%d %d %d\n",X,Y, Extended_Euclid(A, B, &X, &Y));
+	}
+}
+
+
+
+
+LL last_x = 1, last_y = 0, x = 0, y = 1, tmp, quotient, reminder;
+while (b)
+{
+	quotient = a / b;
+	reminder = a%b;
+	a = b;
+	b = reminder;
+
+	tmp = x;
+	x = last_x - quotient*x;
+	last_x = tmp;
+
+	tmp = y;
+	y = last_y - quotient*y;
+	last_y = tmp;
